@@ -4,6 +4,7 @@ import SmartTable from 'vuejs-smart-table'
 import VueNumberFormat from 'vue-number-format'
 
 import './assets/fonts.css'
+import './assets/main.css'
 
 Vue.config.productionTip = false
 Vue.use(SmartTable)
