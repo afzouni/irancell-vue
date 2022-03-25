@@ -13,29 +13,30 @@
             <li class="filter-item">
               <section class="filter-item-inner">
                 <div class="text-center">
-                  <button @click="resetFilter">
-                    حذف فیلتر
-                  </button>
+                  <button @click="resetFilter">حذف فیلتر</button>
                 </div>
-                <h1 class="filter-item-inner-heading minus">مدت زمان</h1>
+                <h1 class="filter-item-inner-heading minus">قیمت</h1>
                 <ul class="filter-attribute-list ul-reset">
                   <div class="filter-attribute-list-inner">
                     <li
                       class="filter-attribute-item"
-                      v-for="value in subcategories"
+                      v-for="(value, index) in sizePrice"
                       :key="value"
                     >
                       <input
                         type="checkbox"
-                        :id="value"
+                        :id="index"
                         :value="value"
-                        v-model="filters.subcategoryname.value"
-                        name="subcategoryname"
+                        v-model="filters.filterPrice.value"
+                        name="stepPrice"
                         class="filter-attribute-checkbox ib-m"
                       />
 
-                      <label :for="value" class="filter-attribute-label ib-m">
-                        {{ value }}
+                      <label
+                        :for="value.name"
+                        class="filter-attribute-label ib-m"
+                      >
+                        {{ value.name }}
                       </label>
                     </li>
                   </div>
@@ -68,28 +69,25 @@
                   </div>
                 </ul>
 
-                <h1 class="filter-item-inner-heading minus">قیمت</h1>
+                <h1 class="filter-item-inner-heading minus">مدت زمان</h1>
                 <ul class="filter-attribute-list ul-reset">
                   <div class="filter-attribute-list-inner">
                     <li
                       class="filter-attribute-item"
-                      v-for="(value, index) in sizePrice"
+                      v-for="value in subcategories"
                       :key="value"
                     >
                       <input
                         type="checkbox"
-                        :id="index"
+                        :id="value"
                         :value="value"
-                        v-model="filters.filterPrice.value"
-                        name="stepPrice"
+                        v-model="filters.subcategoryname.value"
+                        name="subcategoryname"
                         class="filter-attribute-checkbox ib-m"
                       />
 
-                      <label
-                        :for="value.name"
-                        class="filter-attribute-label ib-m"
-                      >
-                        {{ value.name }}
+                      <label :for="value" class="filter-attribute-label ib-m">
+                        {{ value }}
                       </label>
                     </li>
                   </div>
@@ -262,11 +260,11 @@ export default {
       return this.subcategories;
     },
 
-    resetFilter(){
-        this.filters.subcategoryname.value = [];
-        this.filters.filterSize.value = [];
-        this.filters.filterPrice.value = [];
-    }
+    resetFilter() {
+      this.filters.subcategoryname.value = [];
+      this.filters.filterSize.value = [];
+      this.filters.filterPrice.value = [];
+    },
   },
 };
 </script>
