@@ -12,6 +12,7 @@
     "core-js": "^3.8.3",
     "money-format": "^1.0.2",
     "vue": "^2.6.14",
+    "vue-meta": "^2.4.0",
     "vue-money-format": "^1.2.4",
     "vue-number-format": "^1.2.1",
     "vuejs-smart-table": "^0.0.8"
