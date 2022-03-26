@@ -17,6 +17,8 @@ Vue.use(VueNumberFormat, {
   acceptNegative: true,
   isInteger: false,
 })
+import VueMeta from 'vue-meta'
+Vue.use(VueMeta)
 
 new Vue({
   render: h => h(App),

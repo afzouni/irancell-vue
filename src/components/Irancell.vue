@@ -164,28 +164,38 @@ let sizeSteps = {
     max: 99999999,
   },
 };
-let sizePrice = {
-  priceStep1: {
+let sizePrice = [
+  {
     name: "کمتر از 10 هزار تومان",
     min: -1,
     max: 100000,
   },
-  priceStep2: {
-    name: "بین 10 تا 30 هزار تومان",
-    min: 100000,
+  {
+    name: "بین 11 تا 25 هزار تومان",
+    min: 100001,
+    max: 250000,
+  },
+  {
+    name: "بین 26 تا 30 هزار تومان",
+    min: 250001,
     max: 300000,
   },
-  priceStep3: {
-    name: "بین 30 تا 90 هزار تومان",
-    min: 300000,
+  {
+    name: "بین 31 تا 50 هزار تومان",
+    min: 300001,
+    max: 500000,
+  },
+  {
+    name: "بین 51 تا 90 هزار تومان",
+    min: 510001,
     max: 900000,
   },
-  priceStep4: {
-    name: "بالای 90 هزار تومان",
-    min: 900000,
+  {
+    name: "بالای 91 هزار تومان",
+    min: 900001,
     max: 999999999,
   },
-};
+];
 export default {
   name: "CustomFiltering",
   created() {
