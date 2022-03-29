@@ -1,24 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
-import SmartTable from 'vuejs-smart-table'
-import VueNumberFormat from 'vue-number-format'
+import './plugins'
 
-import './assets/fonts.css'
-import './assets/main.css'
+import './assets/styles/main.css'
 
 Vue.config.productionTip = false
-Vue.use(SmartTable)
-Vue.use(VueNumberFormat, {
-  prefix: "",
-  suffix: "",
-  decimal: ",",
-  thousand: ",",
-  precision: 0,
-  acceptNegative: true,
-  isInteger: false,
-})
-import VueMeta from 'vue-meta'
-Vue.use(VueMeta)
 
 new Vue({
   render: h => h(App),

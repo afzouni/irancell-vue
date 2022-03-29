@@ -1,8 +1,0 @@
-@font-face {
-    font-family: "vazirvue";
-    font-weight: 400;
-    font-style: normal;
-    font-display: auto;
-    /* unicode-range: U+000-5FF; */
-    src: local("vazirvue"), url("./fonts/vazir/Vazirmatn-Regular.woff2") format("woff2");
-  }
