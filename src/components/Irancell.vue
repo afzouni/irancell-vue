@@ -396,9 +396,12 @@ export default {
     },
 
     resetFilter() {
+      // TODO: Implenent LOOP
       this.filters.subcategoryname.value = [];
       this.filters.filterSize.value = [];
       this.filters.filterPrice.value = [];
+      this.filters.filterFilternet.value = [];
+      this.filters.filterHourlyLimit.value = [];
     },
   },
 };
