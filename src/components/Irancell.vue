@@ -15,6 +15,76 @@
                 <div class="text-center">
                   <button @click="resetFilter">حذف فیلتر</button>
                 </div>
+                <h1 class="filter-item-inner-heading minus">
+                  بسته معمولی / داخلی
+                </h1>
+                <ul class="filter-attribute-list ul-reset">
+                  <div class="filter-attribute-list-inner">
+                    <li class="filter-attribute-item">
+                      <input
+                        type="checkbox"
+                        :value="false"
+                        v-model="filters.filterFilternet.value"
+                        class="filter-attribute-checkbox ib-m"
+                      />
+
+                      <label class="filter-attribute-label ib-m">
+                        بسته معمولی (غیرداخلی)
+                      </label>
+                    </li>
+
+                    <li class="filter-attribute-item">
+                      <input
+                        type="checkbox"
+                        :value="true"
+                        v-model="filters.filterFilternet.value"
+                        class="filter-attribute-checkbox ib-m"
+                      />
+
+                      <label class="filter-attribute-label ib-m">
+                        بسته داخلی
+                      </label>
+                    </li>
+                  </div>
+                </ul>
+
+                <h1 class="filter-item-inner-heading minus">
+                  شبانه / محدودیت ساعتی
+                </h1>
+                <ul class="filter-attribute-list ul-reset">
+                  <div class="filter-attribute-list-inner">
+                    <li class="filter-attribute-item">
+                      <input
+                        type="checkbox"
+                        :value="null"
+                        v-model="filters.filterHourlyLimit.value"
+                        class="filter-attribute-checkbox ib-m"
+                      />
+
+                      <label class="filter-attribute-label ib-m">
+                        بدون محدودیت
+                      </label>
+                    </li>
+
+                    <li
+                      class="filter-attribute-item"
+                      v-for="value in hourlyLimitRanges"
+                      :key="value"
+                    >
+                      <input
+                        type="checkbox"
+                        :value="value"
+                        v-model="filters.filterHourlyLimit.value"
+                        class="filter-attribute-checkbox ib-m"
+                      />
+
+                      <label :for="value" class="filter-attribute-label ib-m">
+                        {{ value }}
+                      </label>
+                    </li>
+                  </div>
+                </ul>
+
                 <h1 class="filter-item-inner-heading minus">قیمت</h1>
                 <ul class="filter-attribute-list ul-reset">
                   <div class="filter-attribute-list-inner">
@@ -106,9 +176,18 @@
             </p>
             <p>
               <strong>
-                ظاهرا در مورد بسته‌ی نامحدود حجم منصفانه (!!!)
-                وجود دارد که حجم آن بصورت فرضی ۱۰۰ گیگابایت درنظر گرفته شده است و اگر نیاز به اصلاح دارد لطفا اعلام کنید.
+                در مورد بسته‌ی نامحدود حجم منصفانه (!!!) وجود دارد که مقدار آن
+                25 گیگ است!
               </strong>
+            </p>
+            <p>
+              توضیحات ایرانسل در مورد بسته‌های اینترنت
+              <a
+                href="https://irancell.ir/p/12924/%D9%86%DA%A9%D8%A7%D8%AA-%D9%82%D8%A8%D9%84-%D8%A7%D8%B2-%D8%AE%D8%B1%DB%8C%D8%AF-%D8%A8%D8%B3%D8%AA%D9%87-%D8%A7%DB%8C%D9%86%D8%AA%D8%B1%D9%86%D8%AA-%D9%87%D9%85%D8%B1%D8%A7%D9%87"
+                target="_blank"
+                >اینجا</a
+              >
+              نوشته شده است.
             </p>
             <v-table :data="boltons" :filters="filters" class="table">
               <thead slot="head" class="w3-text-teal">
@@ -122,6 +201,8 @@
                   <!-- <v-th sortKey="expiryday">مدت روز</v-th> -->
                   <v-th sortKey="subcategoryname">نوع</v-th>
                   <v-th sortKey="sizePerDay">حجم روزانه معادل (مگ) </v-th>
+                  <v-th sortKey="sizePerDay">شبانه / محدودیت ساعتی</v-th>
+                  <v-th sortKey="sizePerDay">داخلی </v-th>
                 </tr>
               </thead>
               <tbody slot="body" slot-scope="{ displayData }">
@@ -133,6 +214,14 @@
                   <!-- <td>{{ row.expiryday }}</td> -->
                   <td>{{ row.subcategoryname }}</td>
                   <td>{{ row.sizePerDay }}</td>
+                  <td>
+                    <!-- <span v-if="row.hourlyLimit"> -->
+                    {{ row.hourlyLimitRange }}
+                    <!-- </span> -->
+                  </td>
+                  <td>
+                    <span v-if="row.filternet"> بلی </span>
+                  </td>
                 </tr>
               </tbody>
             </v-table>
@@ -146,6 +235,7 @@
 <script>
 import boltons from "../boltons-new.json";
 let subcategories = [];
+let hourlyLimitRanges = [];
 let sizeSteps = {
   sizeStep1: {
     name: "کمتر از 1 گیگ",
@@ -212,12 +302,15 @@ export default {
       checked: [],
       sizeSteps,
       subcategories,
+      hourlyLimitRanges,
       sizePrice,
       boltons,
       filters: {
         subcategoryname: { value: [], custom: this.filterBySubcategoryname },
         filterSize: { value: [], custom: this.filterBySize },
         filterPrice: { value: [], custom: this.filterByPrice },
+        filterFilternet: { value: [], custom: this.filterByFilternet },
+        filterHourlyLimit: { value: [], custom: this.filterByHourlyLimit },
       },
     };
   },
@@ -266,14 +359,40 @@ export default {
 
     filteredList(array) {
       var subcategories = [];
+      var hourlyLimitRanges = [];
+
       array.forEach((element) => {
         var key = element["subcategory"];
         if (subcategories[key] === undefined) {
           subcategories.push(element["subcategoryname"]);
         }
+
+        var keyHourlyLimitRange = element["hourlyLimitRange"];
+        if (
+          hourlyLimitRanges[keyHourlyLimitRange] === undefined &&
+          element["hourlyLimit"]
+        ) {
+          hourlyLimitRanges.push(element["hourlyLimitRange"]);
+        }
       });
       this.subcategories = [...new Set(subcategories)];
-      return this.subcategories;
+      this.hourlyLimitRanges = [...new Set(hourlyLimitRanges)];
+      return this.subcategories, this.hourlyLimitRanges;
+    },
+
+    filterByFilternet(filterValue, row) {
+      if (filterValue.length === 0) {
+        return true;
+      }
+      return filterValue.includes(row.filternet);
+    },
+
+    filterByHourlyLimit(filterValue, row) {
+      if (filterValue.length === 0) {
+        return true;
+      }
+
+      return filterValue.includes(row.hourlyLimitRange);
     },
 
     resetFilter() {
