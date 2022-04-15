@@ -3,8 +3,7 @@ import App from './App.vue'
 import SmartTable from 'vuejs-smart-table'
 import VueNumberFormat from 'vue-number-format'
 
-import './assets/fonts.css'
-import './assets/main.css'
+import './assets/scss/main.scss'
 
 Vue.config.productionTip = false
 Vue.use(SmartTable)
