@@ -1,0 +1,12 @@
+@import "../base/variables";
+
+.i-card {
+  border: 1px solid $color-irancell;
+
+  &__header {
+    font-weight: bold;
+    font-size: 26px;
+    padding: 6px 10px;
+    background-color: $color-irancell;
+  }
+}
