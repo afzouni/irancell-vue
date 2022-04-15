@@ -22,7 +22,7 @@ html {
 body {
   margin: 0;
   line-height: 1.5;
-  font-family: "vazirvue";
+  font-family: "vazirvue", sans-serif;
   color: #333;
   direction: rtl;
 }
@@ -43,7 +43,7 @@ h3,
 h4,
 h5,
 h6 {
-  font-family: "vazirvue";
+  font-family: "vazirvue", sans-serif;
 }
 
 h1 {
@@ -544,7 +544,7 @@ button{
   color: #000000 !important;
   border: none;
   padding: 15px;
-  font-family: 'vazirvue';
+  font-family: 'vazirvue', sans-serif;
   font-weight: bold;
   border-radius: 8px;
   width: 80%;
